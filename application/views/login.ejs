@@ -1,0 +1,54 @@
+<%- include('templates/head', {page_title: page_title}) %>
+<form action="" method="post">
+    <div id="login">
+        <h1>
+            <img src="/images/logo-lrage.png" alt="Welcome to Node" />
+        </h1>
+        <div id="login-warp">
+            <h2>Login</h2>            
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="username">Email</label>
+                        <input type="text" name="username" class="form-control" value="<%= ((typeof fieldValue == 'object' && fieldValue)?fieldValue.username:'') %>" id="email" >
+                        <% if(locals.statusCode && statusCode=='02' && typeof data.username=='object'){ %>
+                            <p class="text-danger">
+                                <%= data.username.message %>
+                            </p>
+                        <% } %>
+                    </div>
+                </div>               
+            </div>
+            
+            <div class="row">            
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" class="form-control" value="<%= ((typeof fieldValue == 'object' && fieldValue)?fieldValue.password:'') %>" id="password" >                       
+                    </div>
+                </div>
+                <div class="col-sm-12 form-group">   
+                    <% if(locals.statusCode && statusCode=='02' && typeof data.password=='object'){ %>
+                        <p class="text-danger">
+                            <%= data.password.message %>
+                        </p>
+                    <% } %>     
+                    <label><input type="checkbox" name="rememberMe" value="Y" <%= ((typeof fieldValue == 'object' && fieldValue && fieldValue.rememberMe =='Y')?'checked':'') %> id="rememberMe" >
+                    Remember me.</label>
+                </div>  
+            </div>
+            <div class="form-group">                
+                <button class="btn btn-primary btn-block" type="submit">Login</button>
+            </div>            
+            <% if((locals.statusCode) && (statusCode=='00' || statusCode=='01')) { %>
+                <div class="form-group <%= ((statusCode=='00')?'alert alert-success':'alert alert-danger') %>">
+                    <%= message %>
+                </div>
+            <% } %>
+        </div>
+        <div id="copyright">
+            <p>© 2018 Node, all rights reserved.</p>
+        </div>
+    </div>
+</form>
+<%- include('templates/footer') %>

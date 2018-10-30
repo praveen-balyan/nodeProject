@@ -1,0 +1,136 @@
+<%- include('templates/head',{page_title: page_title}) -%>
+<div id="warpper">
+    <!-- include sidebar file here -->
+    <%- include('templates/sidebar') -%>
+  
+    <div id="wrap">
+        <!-- include header file here -->
+
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><%= ((locals.actionType=='Update')?'Update User':'Add new user') %> </h4>
+                        </div>
+                        <div class="panel-body">                        
+                            <div class="inner-container">
+                                <div class="row" style="width: 70%; margin:0 auto;">
+                                    <div class="col-sm-6">
+                                        <img id="profileImg" src="/uploads/profile_pic/<%= ((locals.actionType=='Update')?fieldValue.profile_pic:'no_image.jpeg') %>" width="350px">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="f_name">First Name</label>
+                                                    <input type="text" name="f_name" class="form-control" value="<%= ((typeof fieldValue == 'object' && fieldValue && statusCode!='00')?fieldValue.f_name:'') %>" id="f_name" >
+                                                    <% if(locals.statusCode && statusCode=='02' && typeof data.f_name=='object'){ %>
+                                                        <p class="text-danger">
+                                                            <%= data.f_name.message %>
+                                                        </p>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="l_name">Last Name</label>
+                                                    <input type="text" name="l_name" class="form-control" value="<%= ((typeof fieldValue == 'object' && fieldValue && statusCode!='00')?fieldValue.l_name:'') %>" id="l_name" >
+                                                    <% if(locals.statusCode && statusCode=='02' && typeof data.l_name=='object'){ %>
+                                                        <p class="text-danger">
+                                                            <%= data.l_name.message %>
+                                                        </p>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="email">Email</label>
+                                                    <input type="email" name="email" class="form-control" value="<%= ((typeof fieldValue == 'object' && fieldValue && statusCode!='00')?fieldValue.email:'') %>" id="email" <%= ((locals.actionType=='Update')?'readonly':'') %>>
+                                                    <% if(locals.statusCode && statusCode=='02' && typeof data.email=='object'){ %>
+                                                        <p class="text-danger">
+                                                            <%= data.email.message %>
+                                                        </p>
+                                                    <% } %>
+                                                </div>
+                                            </div>               
+                                        </div>
+                                        <div class="row">            
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="gender">Gender</label>
+                                                    <select name="gender" id="gender" class="form-control"  >
+                                                        <option value ="">Select</option>
+                                                        <option value ="Male" <%= ((typeof fieldValue == 'object' && fieldValue.gender =='Male' && statusCode!='00' )?'selected':'') %> >Male</option>
+                                                        <option value ="Female" <%= ((typeof fieldValue == 'object' && fieldValue.gender =='Female' && statusCode!='00')?'selected':'') %> >Female</option>
+                                                    </select>
+                                                    <% if(locals.statusCode && statusCode=='02' && typeof data.gender=='object'){ %>
+                                                        <p class="text-danger">
+                                                            <%= data.gender.message %>
+                                                        </p>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="dob">Date of Birth</label>
+                                                    <input type="text" name="dob" class="form-control datepicker" value="<%= ((typeof fieldValue == 'object' && fieldValue && statusCode!='00')?fieldValue.dob:'') %>" data-date-end-date="0d" data-date-format="yyyy-mm-dd" id="dob">
+                                                    <% if(locals.statusCode && statusCode=='02' && typeof data.dob=='object'){ %>
+                                                        <p class="text-danger">
+                                                            <%= data.dob.message %>
+                                                        </p>
+                                                    <% } %>
+                                                </div>
+                                            </div>            
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="profile_pic">Profile Picture</label>
+                                                    <input type="file" name="profile_pic" id="profile_pic">   
+                                                    <% if(locals.statusCode && statusCode=='02' && typeof data.profile_pic=='object'){ %>
+                                                        <p class="text-danger">
+                                                            <%= data.profile_pic.message %>
+                                                        </p>
+                                                    <% } %>             
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% if(locals.actionType !='Update'){ %>
+                                        <div class="row">            
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="password">Password</label>
+                                                    <input type="password" name="password" class="form-control" value="<%= ((typeof fieldValue == 'object' && fieldValue && statusCode !='00')?fieldValue.password:'') %>" id="password" >                       
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="c_password">Confirm Password</label>
+                                                    <input type="password" name="c_password" class="form-control" value="<%= ((typeof fieldValue == 'object' && fieldValue && statusCode !='00')?fieldValue.c_password:'') %>" id="c_password" >                       
+                                                </div>
+                                            </div>  
+                                            <div class="col-sm-12 form-group">   
+                                                <% if(locals.statusCode && statusCode=='02' && typeof data.password=='object'){ %>
+                                                    <p class="text-danger">
+                                                        <%= data.password.message %>
+                                                    </p>
+                                                <% } %>     
+                                            </div>  
+                                        </div>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>                   
+                    <button class="btn btn-primary btn-lg" name="submitForm" type="submit"><%= ((locals.actionType=='Update')?'Update':'Save') %></button>                    
+                </form> 
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('templates/footer') -%>
